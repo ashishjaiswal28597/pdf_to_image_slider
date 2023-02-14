@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Slide from "./slide/Slide";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 import "./styles.css";
 import "./App.css";
@@ -66,6 +65,8 @@ export default function App() {
     // eslint-disable-next-line
   }, [pdf, currentPage]);
 
+  useEffect(() => {}, []);
+
   const styles = {
     wrapper: {
       display: "flex",
@@ -75,8 +76,6 @@ export default function App() {
       gap: "5px",
     },
     imageWrapper: {
-      // width: "300px",
-      // height: "350px",
       border: "1px solid rgba(0,0,0,0.15)",
       borderRadius: "3px",
       boxShadow: "0 2px 5px 0 rgba(0,0,0,0.25)",
@@ -93,96 +92,82 @@ export default function App() {
 
   return (
     <div className="App">
-      <button
-        id="upload-button"
-        onClick={() => document.getElementById("file-to-upload").click()}
-      >
-        Select PDF
-      </button>
-      <input
-        type="file"
-        id="file-to-upload"
-        accept="application/pdf"
-        hidden
-        onChange={showPdf}
-      />
-      <div id="pdf-main-container">
-        <div id="pdf-loader" hidden={!pdfRendering}>
-          Loading document ...
-        </div>
-        <div id="page-count-container">
-          Page {currentPage} of{" "}
-          <div id="pdf-total-pages">{/*totalPages*/ pdf.numPages}</div>
-        </div>
-        <div id="pdf-contents">
-          <div id="pdf-meta">
-            <div id="pdf-buttons">
-              {/* <button id="pdf-prev" onClick={handlePrev}>
-                Previous
-              </button>
-              <button id="pdf-next" onClick={handleNext}>
-                Next
-              </button> */}
-            </div>
+      <div className="container">
+        <button
+          id="upload-button"
+          onClick={() => document.getElementById("file-to-upload").click()}
+        >
+          Select PDF
+        </button>
+        <input
+          type="file"
+          id="file-to-upload"
+          accept="application/pdf"
+          hidden
+          onChange={showPdf}
+        />
+        <div id="pdf-main-container">
+          <div id="pdf-loader" hidden={!pdfRendering}>
+            Loading document ...
           </div>
-          <div id="image-convas-row">
-            {/* <canvas id="pdf-canvas" width={width} height={height}></canvas> */}
-            <div style={styles.wrapper}>
-              <FaArrowAltCircleLeft
-                className="left-arrow"
-                id="pdf-prev"
-                onClick={handlePrev}
-              />
-              <FaArrowAltCircleRight
-                className="right-arrow"
-                id="pdf-next"
-                onClick={handleNext}
-              />
+
+          <div id="pdf-contents">
+            <div id="image-convas-row">
               <div className="main_cont">
+                <FaArrowAltCircleLeft
+                  className="left-arrow"
+                  id="pdf-prev"
+                  onClick={handlePrev}
+                />
+                <FaArrowAltCircleRight
+                  className="right-arrow"
+                  id="pdf-next"
+                  onClick={handleNext}
+                  disabled={currentPage === pdf.numPages - 1}
+                />
                 <div className="img_cont">
                   {images.map((image, index) => (
                     <div
                       key={index}
                       style={{
-                        display: index === currentPage -2  ? "block" : "none",
+                        display: index === currentPage - 2 ? "block" : "none",
+                        width: "100%",
+                        height: "150px",
+                        margin: "0",
+                        border: "1px solid black",
+                        boxShadow: "rgb(38, 57, 77) 0px 20px 30px -10px",
+                        opacity: "0.2",
+                      }}
+                    >
+                      <img
+                        src={image}
+                        alt="PDF page"
+                        style={{ height: "150px" }}
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                {/* main */}
+
+                <div className="img_cont">
+                  {images.map((image, index) => (
+                    <div
+                      key={index}
+                      style={{
+                        display: index === currentPage - 1 ? "block" : "none",
                         width: "100%",
                         height: "350px",
                         margin: "0",
                         border: "1px solid black",
                         boxShadow: "rgb(38, 57, 77) 0px 20px 30px -10px",
-                        opacity:"0.2"
-                        // overflowY:"scroll"
+                        zIndex: "1",
                       }}
                     >
                       <img
                         src={image}
                         alt="PDF page"
                         style={{ height: "350px" }}
-                      />
-                    </div>
-                  ))}
-                </div>
-
-
-                         {/* main */}
-                <div className="img_cont">
-                  {images.map((image, index) => (
-                    <div
-                      key={index}
-                      style={{
-                        display: index === currentPage - 1? "block" : "none",
-                        width: "100%",
-                        height: "550px",
-                        margin: "0",
-                        border: "1px solid black",
-                        boxShadow: "rgb(38, 57, 77) 0px 20px 30px -10px",
-                        zIndex:"1"
-                      }}
-                    >
-                      <img
-                        src={image}
-                        alt="PDF page"
-                        style={{ height: "550px" }}
                       />
                     </div>
                   ))}
@@ -195,76 +180,189 @@ export default function App() {
                       style={{
                         display: index === currentPage + 0 ? "block" : "none",
                         width: "100%",
-                        height: "350px",
+                        height: "150px",
                         margin: "0",
                         border: "1px solid black",
                         boxShadow: "rgb(38, 57, 77) 0px 20px 30px -10px",
-                        opacity:"0.2"
+                        opacity: "0.2",
                       }}
                     >
                       <img
                         src={image}
                         alt="PDF page"
-                        style={{ height: "350px" }}
+                        style={{ height: "150px" }}
                       />
                     </div>
                   ))}
                 </div>
               </div>
-
-              {/* {images.map((image, idx) => (
-                <div key={idx} style={styles.imageWrapper}>
-                  <img
-                    id="image-generated"
-                    src={image}
-                    alt="pdfImage"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      margin: "0",
-                      border: "none",
-                    }}
-                   
-                  />
-                </div>
-              ))} */}
             </div>
-          </div>
-          <div id="page-loader" hidden={!pageRendering}>
-            Loading page ...
-          </div>
 
-          {/* <button>Show PNG</button>
-          <button>Download PNG</button> */}
+            {/* <div id="page-loader" hidden={!pageRendering}>
+              Loading page ... Page {currentPage} of{" "}
+              <div id="pdf-total-pages">{pdf.numPages}</div>
+            </div> */}
+          </div>
         </div>
+
+
+
+       
+
+
+
       </div>
 
-      <div className="templet_small">
-        {images.map((image, idx) => (
-          <div
-            key={idx}
-            style={{ width: "20%", height: "100%", padding: "5px 10px" }}
-          >
-            <img
-              id="image-generated"
-              src={image}
-              alt="pdfImage"
-              style={{
-                width: "100%",
-                height: "100%",
-                margin: "0",
-                border: "1px solid black",
-              }}
-            />
-          </div>
-        ))}
-      </div>
-      <br />
-      <br />
-      {/* <Slide /> */}
+
+
+      <div className="main_small_cont">
+
+<div>
+  {
+    <div className="templet_small">
+      {images.map((image, index) => (
+        <div
+          key={index}
+          style={{
+            display: index === currentPage - 1 ? "block" : "none",
+            width: "100%",
+            height: "100%",
+            padding: "5px 10px",
+          }}
+        >
+          <img
+            id="image-generated"
+            src={image}
+            alt="pdfImage"
+            style={{
+              width: "100%",
+              height: "100%",
+              margin: "0",
+              border: "1px solid black",
+            }}
+          />
+        </div>
+      ))}
+    </div>
+  }
+</div>
+
+<div>
+  {
+    <div className="templet_small">
+      {images.map((image, index) => (
+        <div
+          key={index}
+          style={{
+            display: index === currentPage ? "block" : "none",
+            width: "100%",
+            height: "100%",
+            padding: "5px 10px",
+          }}
+        >
+          <img
+            id="image-generated"
+            src={image}
+            alt="pdfImage"
+            style={{
+              width: "100%",
+              height: "100%",
+              margin: "0",
+              border: "1px solid black",
+            }}
+          />
+        </div>
+      ))}
+    </div>
+  }
+</div>
+<div>
+  {
+    <div className="templet_small">
+      {images.map((image, index) => (
+        <div
+          key={index}
+          style={{
+            display: index === currentPage + 1 ? "block" : "none",
+            width: "100%",
+            height: "25%",
+            padding: "5px 10px",
+          }}
+        >
+          <img
+            id="image-generated"
+            src={image}
+            alt="pdfImage"
+            style={{
+              width: "100%",
+              height: "100%",
+              margin: "0",
+              border: "1px solid black",
+            }}
+          />
+        </div>
+        
+      ))}
+    </div>
+  }
+</div>
+<div>
+  {
+    <div className="templet_small">
+      {images.map((image, index) => (
+        <div
+          key={index}
+          style={{
+            display: index === currentPage + 2 ? "block" : "none",
+            width: "100%",
+            height: "100%",
+            padding: "5px 10px",
+          }}
+        >
+          <img
+            id="image-generated"
+            src={image}
+            alt="pdfImage"
+            style={{
+              width: "100%",
+              height: "100%",
+              margin: "0",
+              border: "1px solid black",
+            }}
+          />
+        </div>
+      ))}
+    </div>
+  }
+</div>
+
+
+</div>
+
+
+
     </div>
   );
 }
+
+// {
+//   /* {images.map((image, idx) => (
+//                 <div key={idx} style={styles.imageWrapper}>
+//                   <img
+//                     id="image-generated"
+//                     src={image}
+//                     alt="pdfImage"
+//                     style={{
+//                       width: "100%",
+//                       height: "100%",
+//                       margin: "0",
+//                       border: "none",
+//                     }}
+
+//                   />
+//                 </div>
+//               ))} */
+// }
 
 // import React, { useState, useEffect } from "react";
 
@@ -335,3 +433,26 @@ export default function App() {
 // };
 
 // export default ImageDisplay;
+
+{
+  /* <div className="templet_small">
+        {images.map((image, idx) => (
+          <div
+            key={idx}
+            style={{ width: "20%", height: "100%", padding: "5px 10px" }}
+          >
+            <img
+              id="image-generated"
+              src={image}
+              alt="pdfImage"
+              style={{
+                width: "100%",
+                height: "100%",
+                margin: "0",
+                border: "1px solid black",
+              }}
+            />
+          </div>
+        ))}
+      </div> */
+}

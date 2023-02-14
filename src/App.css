@@ -6,8 +6,8 @@
 }
 .right-arrow {
   position: absolute;
-  top: 50%;
-  right: 32px;
+  top: 40%;
+  right: -500px;
   font-size: 3rem;
   color: #000;
   z-index: 10;
@@ -17,8 +17,8 @@
 
 .left-arrow {
   position: absolute;
-  top: 50%;
-  left: 32px;
+  top: 40%;
+  left: -500px;
   font-size: 3rem;
   color: #000;
   z-index: 10;
@@ -28,9 +28,28 @@
 .main_cont{
  display: flex !important;
  align-items: center;
- overflow: hidden;
+ position: relative;
+ justify-content: center;
  width: 100%;
+  /* margin: 10px ; */
+ 
 }
-/* .img_cont{
-  
-} */
+.App{
+  width: 100%;
+  height: 600px;
+  background-color: #FF3CAC;
+  background-image: linear-gradient(0deg, #FF3CAC 0%, #784BA0 24%, #1e1b7a 49%);
+  padding: 80px 0;
+}
+.container{
+  margin: 50px 50px !important;
+}
+.img_cont{
+  padding: 7px;
+}
+
+.main_small_cont{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
