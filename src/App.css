@@ -2,8 +2,12 @@
   display: flex !important;
   width: 100% !important;
   flex-wrap: wrap;
-   
+  transition: transform 0.3s ;
 }
+/* .templet_small:hover{
+  transform: scale(1.03);
+} */
+
 .right-arrow {
   position: absolute;
   top: 40%;
@@ -14,7 +18,9 @@
   cursor: pointer;
   user-select: none;
 }
-
+.right-arrow:hover{
+  transform: scale(1.05);
+}
 .left-arrow {
   position: absolute;
   top: 40%;
@@ -25,21 +31,24 @@
   cursor: pointer;
   user-select: none;
 }
+.left-arrow:hover{
+  transform: scale(1.05);
+  
+}
 .main_cont{
  display: flex !important;
  align-items: center;
  position: relative;
  justify-content: center;
  width: 100%;
-  /* margin: 10px ; */
- 
 }
 .App{
   width: 100%;
-  height: 600px;
+  height: 700px;
   background-color: #FF3CAC;
   background-image: linear-gradient(0deg, #FF3CAC 0%, #784BA0 24%, #1e1b7a 49%);
   padding: 80px 0;
+  overflow: hidden;
 }
 .container{
   margin: 50px 50px !important;

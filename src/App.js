@@ -118,13 +118,18 @@ export default function App() {
                   className="left-arrow"
                   id="pdf-prev"
                   onClick={handlePrev}
+                  style={{ display: currentPage === 1 ? "none" : "block" }}
                 />
                 <FaArrowAltCircleRight
                   className="right-arrow"
                   id="pdf-next"
                   onClick={handleNext}
-                  disabled={currentPage === pdf.numPages - 1}
+                  style={{
+                    display:
+                      currentPage === pdf.numPages - 0 ? "none" : "block",
+                  }}
                 />
+                {/* slide 1 */}
                 <div className="img_cont">
                   {images.map((image, index) => (
                     <div
@@ -148,8 +153,7 @@ export default function App() {
                   ))}
                 </div>
 
-                {/* main */}
-
+                {/* main screen slide 2*/}
                 <div className="img_cont">
                   {images.map((image, index) => (
                     <div
@@ -172,7 +176,7 @@ export default function App() {
                     </div>
                   ))}
                 </div>
-
+                {/* slide 3 */}
                 <div className="img_cont">
                   {images.map((image, index) => (
                     <div
@@ -204,143 +208,132 @@ export default function App() {
             </div> */}
           </div>
         </div>
-
-
-
-       
-
-
-
       </div>
 
-
-
+      {/* small screen slide container */}
       <div className="main_small_cont">
-
-<div>
-  {
-    <div className="templet_small">
-      {images.map((image, index) => (
-        <div
-          key={index}
-          style={{
-            display: index === currentPage - 1 ? "block" : "none",
-            width: "100%",
-            height: "100%",
-            padding: "5px 10px",
-          }}
-        >
-          <img
-            id="image-generated"
-            src={image}
-            alt="pdfImage"
-            style={{
-              width: "100%",
-              height: "100%",
-              margin: "0",
-              border: "1px solid black",
-            }}
-          />
+        {/* small screen slide 1 */}
+        <div>
+          {
+            <div className="templet_small">
+              {images.map((image, index) => (
+                <div
+                  key={index}
+                  style={{
+                    display: index === currentPage - 1 ? "block" : "none",
+                    width: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                    height: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                    padding: "5px 10px",
+                  }}
+                  className="cont_image"
+                >
+                  <img
+                    id="image-generated"
+                    src={image}
+                    alt="pdfImage"
+                    style={{
+                      width: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                      height: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                      margin: "0",
+                      border: "1px solid black",
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+          }
         </div>
-      ))}
-    </div>
-  }
-</div>
-
-<div>
-  {
-    <div className="templet_small">
-      {images.map((image, index) => (
-        <div
-          key={index}
-          style={{
-            display: index === currentPage ? "block" : "none",
-            width: "100%",
-            height: "100%",
-            padding: "5px 10px",
-          }}
-        >
-          <img
-            id="image-generated"
-            src={image}
-            alt="pdfImage"
-            style={{
-              width: "100%",
-              height: "100%",
-              margin: "0",
-              border: "1px solid black",
-            }}
-          />
+        {/* small screen slide 2 */}
+        <div>
+          {
+            <div className="templet_small">
+              {images.map((image, index) => (
+                <div
+                  key={index}
+                  style={{
+                    display: index === currentPage ? "block" : "none",
+                    width: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                    height: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                    padding: "5px 10px",
+                  }}
+                >
+                  <img
+                    id="image-generated"
+                    src={image}
+                    alt="pdfImage"
+                    style={{
+                      width: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                      height: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                      margin: "0",
+                      border: "1px solid black",
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+          }
         </div>
-      ))}
-    </div>
-  }
-</div>
-<div>
-  {
-    <div className="templet_small">
-      {images.map((image, index) => (
-        <div
-          key={index}
-          style={{
-            display: index === currentPage + 1 ? "block" : "none",
-            width: "100%",
-            height: "25%",
-            padding: "5px 10px",
-          }}
-        >
-          <img
-            id="image-generated"
-            src={image}
-            alt="pdfImage"
-            style={{
-              width: "100%",
-              height: "100%",
-              margin: "0",
-              border: "1px solid black",
-            }}
-          />
+        {/* small screen slide 3 */}
+        <div>
+          {
+            <div className="templet_small">
+              {images.map((image, index) => (
+                <div
+                  key={index}
+                  style={{
+                    display: index === currentPage + 1 ? "block" : "none",
+                    width: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                    height: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                    padding: "5px 10px",
+                  }}
+                >
+                  <img
+                    id="image-generated"
+                    src={image}
+                    alt="pdfImage"
+                    style={{
+                      width: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                      height: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                      margin: "0",
+                      border: "1px solid black",
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+          }
         </div>
-        
-      ))}
-    </div>
-  }
-</div>
-<div>
-  {
-    <div className="templet_small">
-      {images.map((image, index) => (
-        <div
-          key={index}
-          style={{
-            display: index === currentPage + 2 ? "block" : "none",
-            width: "100%",
-            height: "100%",
-            padding: "5px 10px",
-          }}
-        >
-          <img
-            id="image-generated"
-            src={image}
-            alt="pdfImage"
-            style={{
-              width: "100%",
-              height: "100%",
-              margin: "0",
-              border: "1px solid black",
-            }}
-          />
+        {/* small screen slide 4 */}
+        <div>
+          {
+            <div className="templet_small">
+              {images.map((image, index) => (
+                <div
+                  key={index}
+                  style={{
+                    display: index === currentPage + 2 ? "block" : "none",
+                    width: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                    height: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                    padding: "5px 10px",
+                  }}
+                >
+                  <img
+                    id="image-generated"
+                    src={image}
+                    alt="pdfImage"
+                    style={{
+                      width: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                      height: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                      margin: "0",
+                      border: "1px solid black",
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+          }
         </div>
-      ))}
-    </div>
-  }
-</div>
-
-
-</div>
-
-
-
+      </div>
     </div>
   );
 }
