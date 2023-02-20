@@ -1,19 +1,26 @@
 import React, { useEffect } from "react";
+import { Document, Page } from "react-pdf";
+
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 import "./styles.css";
 import "./App.css";
+import pdfFile from "./pdf/pitch.pdf"
 
 const PDFJS = window.pdfjsLib;
 
 export default function App() {
+  const [defaultPdfFile]=React.useState(pdfFile);
   const [pdf, setPdf] = React.useState("");
   const [width, setWidth] = React.useState(0);
   const [images, setImages] = React.useState([]);
   const [height, setHeight] = React.useState(0);
   const [totalPages, setTotalPages] = React.useState(1);
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [pdfRendering, setPdfRendering] = React.useState("");
+  const [pdfRendering, setPdfRendering] = React.useState(pdfFile);
   const [pageRendering, setPageRendering] = React.useState("");
+
+   
+
 
   async function showPdf(event) {
     try {
@@ -22,8 +29,8 @@ export default function App() {
       const uri = URL.createObjectURL(file);
       var _PDF_DOC = await PDFJS.getDocument({ url: uri });
       setPdf(_PDF_DOC);
-      setPdfRendering(false);
-      document.getElementById("file-to-upload").value = "";
+      // setPdfRendering(false);
+      // document.getElementById("file-to-upload").value = "";
     } catch (error) {
       alert(error.message);
     }
@@ -86,6 +93,7 @@ export default function App() {
   const handleNext = () => {
     setCurrentPage(currentPage + 1);
   };
+
   const handlePrev = () => {
     setCurrentPage(currentPage - 1);
   };
@@ -93,19 +101,27 @@ export default function App() {
   return (
     <div className="App">
       <div className="container">
-        <button
+      <div className="main">
+      <Document
+        file={pdfFile}
+        onLoadSuccess={showPdf}
+        >
+        {/* <Page pageNumber={pageNumber} /> */}
+      </Document>
+     </div>
+        {/* <button
           id="upload-button"
           onClick={() => document.getElementById("file-to-upload").click()}
         >
           Select PDF
-        </button>
-        <input
+        </button> */}
+        {/* <input
           type="file"
           id="file-to-upload"
           accept="application/pdf"
           hidden
           onChange={showPdf}
-        />
+        /> */}
         <div id="pdf-main-container">
           <div id="pdf-loader" hidden={!pdfRendering}>
             Loading document ...
@@ -118,7 +134,9 @@ export default function App() {
                   className="left-arrow"
                   id="pdf-prev"
                   onClick={handlePrev}
-                  style={{ display: currentPage === 1 ? "none" : "block" }}
+                  style={{
+                    display: currentPage === 1 ? "none" : "block",
+                  }}
                 />
                 <FaArrowAltCircleRight
                   className="right-arrow"
@@ -126,7 +144,7 @@ export default function App() {
                   onClick={handleNext}
                   style={{
                     display:
-                      currentPage === pdf.numPages - 0 ? "none" : "block",
+                      currentPage >= pdf.numPages - 3 ? "none" : "block",
                   }}
                 />
                 {/* slide 1 */}
@@ -221,8 +239,8 @@ export default function App() {
                   key={index}
                   style={{
                     display: index === currentPage - 1 ? "block" : "none",
-                    width: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
-                    height: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                    width: "100%",
+                    height: "100%",
                     padding: "5px 10px",
                   }}
                   className="cont_image"
@@ -232,8 +250,8 @@ export default function App() {
                     src={image}
                     alt="pdfImage"
                     style={{
-                      width: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
-                      height: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                      width: "100%",
+                      height: "100%",
                       margin: "0",
                       border: "1px solid black",
                     }}
@@ -252,8 +270,8 @@ export default function App() {
                   key={index}
                   style={{
                     display: index === currentPage ? "block" : "none",
-                    width: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
-                    height: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                    width: "100%",
+                    height: "100%",
                     padding: "5px 10px",
                   }}
                 >
@@ -262,8 +280,8 @@ export default function App() {
                     src={image}
                     alt="pdfImage"
                     style={{
-                      width: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
-                      height: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                      width: "100%",
+                      height: "100%",
                       margin: "0",
                       border: "1px solid black",
                     }}
@@ -282,8 +300,8 @@ export default function App() {
                   key={index}
                   style={{
                     display: index === currentPage + 1 ? "block" : "none",
-                    width: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
-                    height: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                    width: "100%",
+                    height: "100%",
                     padding: "5px 10px",
                   }}
                 >
@@ -292,8 +310,8 @@ export default function App() {
                     src={image}
                     alt="pdfImage"
                     style={{
-                      width: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
-                      height: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                      width: "100%",
+                      height: "100%",
                       margin: "0",
                       border: "1px solid black",
                     }}
@@ -312,8 +330,8 @@ export default function App() {
                   key={index}
                   style={{
                     display: index === currentPage + 2 ? "block" : "none",
-                    width: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
-                    height: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                    width: "100%",
+                    height: "100%",
                     padding: "5px 10px",
                   }}
                 >
@@ -322,8 +340,8 @@ export default function App() {
                     src={image}
                     alt="pdfImage"
                     style={{
-                      width: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
-                      height: currentPage >= pdf.numPages - 2 ? "50%" : "100%",
+                      width: "100%",
+                      height: "100%",
                       margin: "0",
                       border: "1px solid black",
                     }}

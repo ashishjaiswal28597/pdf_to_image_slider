@@ -2,7 +2,7 @@
   display: flex !important;
   width: 100% !important;
   flex-wrap: wrap;
-  transition: transform 0.3s ;
+  /* transition: transform 0.3s ; */
 }
 /* .templet_small:hover{
   transform: scale(1.03);
@@ -48,7 +48,7 @@
   background-color: #FF3CAC;
   background-image: linear-gradient(0deg, #FF3CAC 0%, #784BA0 24%, #1e1b7a 49%);
   padding: 80px 0;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 .container{
   margin: 50px 50px !important;
