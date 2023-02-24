@@ -1,38 +1,37 @@
 import React, { useEffect } from "react";
-import { Document, Page } from "react-pdf";
-
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 import "./styles.css";
 import "./App.css";
-import pdfFile from "./pdf/pitch.pdf"
 
 const PDFJS = window.pdfjsLib;
 
 export default function App() {
-  const [defaultPdfFile]=React.useState(pdfFile);
   const [pdf, setPdf] = React.useState("");
   const [width, setWidth] = React.useState(0);
   const [images, setImages] = React.useState([]);
   const [height, setHeight] = React.useState(0);
-  const [totalPages, setTotalPages] = React.useState(1);
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [pdfRendering, setPdfRendering] = React.useState(pdfFile);
+  const [pdfRendering, setPdfRendering] = React.useState();
   const [pageRendering, setPageRendering] = React.useState("");
 
-   
 
+  const url =
+  "http://localhost:3000/pitch.pdf"   
+
+  // const url =
+  //  "https://drive.google.com/drive/my-drive"  
+     
+  
 
   async function showPdf(event) {
     try {
       setPdfRendering(true);
-      const file = event.target.files[0];
-      const uri = URL.createObjectURL(file);
-      var _PDF_DOC = await PDFJS.getDocument({ url: uri });
+      var _PDF_DOC = await PDFJS.getDocument({ url: url });
       setPdf(_PDF_DOC);
-      // setPdfRendering(false);
-      // document.getElementById("file-to-upload").value = "";
+      setPdfRendering(false);
+      document.getElementById("file-to-upload").value = "";
     } catch (error) {
-      alert(error.message);
+      console.log(error)
     }
   }
 
@@ -97,21 +96,18 @@ export default function App() {
   const handlePrev = () => {
     setCurrentPage(currentPage - 1);
   };
-
+  
+  useEffect(()=>{
+    showPdf()
+  },[])
   return (
     <div className="App">
       <div className="container">
       <div className="main">
-      <Document
-        file={pdfFile}
-        onLoadSuccess={showPdf}
-        >
-        {/* <Page pageNumber={pageNumber} /> */}
-      </Document>
-     </div>
-        {/* <button
+      {/* <button
           id="upload-button"
-          onClick={() => document.getElementById("file-to-upload").click()}
+          // onClick={() => document.getElementById("file-to-upload").click()}
+          onClick={showPdf}
         >
           Select PDF
         </button> */}
@@ -122,6 +118,14 @@ export default function App() {
           hidden
           onChange={showPdf}
         /> */}
+      {/* <Document
+        file={pdfFile}
+        onLoadSuccess={showPdf}
+        >
+        <Page pageNumber={ pdf.numPages} />
+      </Document> */}
+     </div>
+        
         <div id="pdf-main-container">
           <div id="pdf-loader" hidden={!pdfRendering}>
             Loading document ...
@@ -219,6 +223,7 @@ export default function App() {
                 </div>
               </div>
             </div>
+             { `Total pages `+ pdf.numPages }
 
             {/* <div id="page-loader" hidden={!pageRendering}>
               Loading page ... Page {currentPage} of{" "}
@@ -227,6 +232,7 @@ export default function App() {
           </div>
         </div>
       </div>
+
 
       {/* small screen slide container */}
       <div className="main_small_cont">
@@ -256,6 +262,7 @@ export default function App() {
                       border: "1px solid black",
                     }}
                   />
+                  {currentPage}
                 </div>
               ))}
             </div>
@@ -286,6 +293,7 @@ export default function App() {
                       border: "1px solid black",
                     }}
                   />
+                  {currentPage+1}
                 </div>
               ))}
             </div>
@@ -316,6 +324,7 @@ export default function App() {
                       border: "1px solid black",
                     }}
                   />
+                  {currentPage+2}
                 </div>
               ))}
             </div>
@@ -346,6 +355,7 @@ export default function App() {
                       border: "1px solid black",
                     }}
                   />
+                  {currentPage+3} 
                 </div>
               ))}
             </div>
@@ -354,116 +364,4 @@ export default function App() {
       </div>
     </div>
   );
-}
-
-// {
-//   /* {images.map((image, idx) => (
-//                 <div key={idx} style={styles.imageWrapper}>
-//                   <img
-//                     id="image-generated"
-//                     src={image}
-//                     alt="pdfImage"
-//                     style={{
-//                       width: "100%",
-//                       height: "100%",
-//                       margin: "0",
-//                       border: "none",
-//                     }}
-
-//                   />
-//                 </div>
-//               ))} */
-// }
-
-// import React, { useState, useEffect } from "react";
-
-// const MainScreen = ({ image }) => {
-//   return (
-//     <div style={{ width: "100%", height: "70vh" }}>
-//       <img src={image} alt="PDF page" />
-//     </div>
-//   );
-// };
-
-// const OtherPages = ({ images, currentPage, setCurrentPage }) => {
-//   const handleNext = () => {
-//     setCurrentPage(currentPage + 1);
-//   };
-
-//   const handlePrev = () => {
-//     setCurrentPage(currentPage - 1);
-//   };
-
-//   return (
-//     <div>
-//       {images.map((image, index) => (
-//         <div
-//           key={index}
-//           style={{
-//             display: index === currentPage ? "block" : "none",
-//             width: "100%",
-//             height: "20vh"
-//           }}
-//         >
-//           <img src={image} alt="PDF page" />
-//         </div>
-//       ))}
-//       <button onClick={handlePrev} disabled={currentPage === 0}>
-//         Prev
-//       </button>
-//       <button onClick={handleNext} disabled={currentPage === images.length - 1}>
-//         Next
-//       </button>
-//     </div>
-//   );
-// };
-
-// const ImageDisplay = () => {
-//   const [images, setImages] = useState([]);
-//   const [currentPage, setCurrentPage] = useState(0);
-
-//   useEffect(() => {
-//     // Load the images into the component
-//     const imagesPath = [];
-//     for (let i = 0; i < 5; i++) {
-//       imagesPath.push(`https://picsum.photos/400/300?image=${i}`);
-//     }
-//     setImages(imagesPath);
-//   }, []);
-
-//   return (
-//     <div>
-//       <MainScreen image={images[0]} />
-//       <OtherPages
-//         images={images.slice(1)}
-//         currentPage={currentPage}
-//         setCurrentPage={setCurrentPage}
-//       />
-//     </div>
-//   );
-// };
-
-// export default ImageDisplay;
-
-{
-  /* <div className="templet_small">
-        {images.map((image, idx) => (
-          <div
-            key={idx}
-            style={{ width: "20%", height: "100%", padding: "5px 10px" }}
-          >
-            <img
-              id="image-generated"
-              src={image}
-              alt="pdfImage"
-              style={{
-                width: "100%",
-                height: "100%",
-                margin: "0",
-                border: "1px solid black",
-              }}
-            />
-          </div>
-        ))}
-      </div> */
 }
