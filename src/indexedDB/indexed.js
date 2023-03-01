@@ -1,53 +1,67 @@
-import React, { useEffect } from "react";
+// const dbName = "pdfs-db";
+// const objectStoreName = "pdfs";
 
-const idb =
-  window.indexedDB ||
-  window.mozIndexedDB ||
-  window.webkitIndexedDB ||
-  window.msIndexedDB ||
-  window.shimIndexedDB;
+// // Open the database and define the object store
+// const request = indexedDB.open(dbName, 1);
 
-const insertDataInIndexedDb = () => {
-  //check for support
-  if (!idb) {
-    console.log("This browser doesn't support IndexedDB");
-    return;
-  }
+// request.onupgradeneeded = function(event) {
+//   const db = event.target.result;
+//   const objectStore = db.createObjectStore(objectStoreName, { keyPath: "id" });
+//   objectStore.createIndex("name", "name", { unique: false });
+//   objectStore.createIndex("date", "date", { unique: false });
+// };
 
-  console.log(idb);
+// request.onsuccess = function(event) {
+//   const db = event.target.result;
+//   const objectStore = db.transaction([objectStoreName], "readwrite").objectStore(objectStoreName);
 
-  const request = idb.open("test-db", 1);
+//   // Add a PDF file to the object store
+//   const pdfFile = { id: 1, name: "Sample PDF", date: new Date(), file: pdfBlob };
+//   const addRequest = objectStore.add(pdfFile);
 
-  request.onerror = function (event) {
-    console.error("An error occurred with IndexedDB");
-    console.error(event);
-  };
+//   addRequest.onsuccess = function() {
+//     console.log("PDF file added to IndexedDB");
+//   };
 
-  request.onupgradeneeded = function (event) {
-    console.log(event);
-    const db = request.result;
+//   addRequest.onerror = function() {
+//     console.log("Failed to add PDF file to IndexedDB");
+//   };
 
-    if (!db.objectStoreNames.contains("userData")) {
-      const objectStore = db.createObjectStore("userData", {
-        keyPath: "id",
-      });
-    }
-  };
+//   // Retrieve PDF files from the object store
+//   const getRequest = objectStore.get(1);
 
-  request.onsuccess = () => {
-    console.log("Database opened successfully");
-  };
-};
-const indexed = () => {
-  
-  useEffect(() => {
-    insertDataInIndexedDb();
-  }, []);
- 
-  return;
-  <>
+//   getRequest.onsuccess = function() {
+//     const pdfFile = getRequest.result;
+//     console.log(`Retrieved PDF file: ${pdfFile.name}`);
+//   };
 
-  </>;
-};
+//   getRequest.onerror = function() {
+//     console.log("Failed to retrieve PDF file from IndexedDB");
+//   };
 
-export default indexed;
+//   const getAllRequest = objectStore.getAll();
+
+//   getAllRequest.onsuccess = function() {
+//     const pdfFiles = getAllRequest.result;
+//     console.log(`Retrieved ${pdfFiles.length} PDF files from IndexedDB`);
+//   };
+
+//   getAllRequest.onerror = function() {
+//     console.log("Failed to retrieve PDF files from IndexedDB");
+//   };
+
+//   // Delete a PDF file from the object store
+//   const deleteRequest = objectStore.delete(1);
+
+//   deleteRequest.onsuccess = function() {
+//     console.log("PDF file deleted from IndexedDB");
+//   };
+
+//   deleteRequest.onerror = function() {
+//     console.log("Failed to delete PDF file from IndexedDB");
+//   };
+// };
+
+// request.onerror = function() {
+//   console.log("Failed to open IndexedDB");
+// };

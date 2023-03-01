@@ -3,6 +3,74 @@ import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 import "./styles.css";
 import "./App.css";
 
+// const idb =
+//   window.indexedDB ||
+//   window.mozIndexedDB ||
+//   window.webkitIndexedDB ||
+//   window.msIndexedDB ||
+//   window.shimIndexedDB;
+
+// const insertDataInIndexedDb = () => {
+//   //check for support
+//   if (!idb) {
+//     console.log("This browser doesn't support IndexedDB");
+//     return;
+//   }
+
+//   console.log(idb);
+
+//   const request = idb.open("test-db", 1);
+
+//   request.onerror = function (event) {
+//     console.error("An error occurred with IndexedDB");
+//     console.error(event);
+//   };
+
+//   request.onupgradeneeded = function (event) {
+//     console.log(event);
+//     // const db = request.result;
+//     const db= event.target.result
+
+//     if (!db.objectStoreNames.contains("userData")) {
+//       const objectStore = db.createObjectStore("userData", {
+//         keyPath: "id",
+//       });
+//     }
+//   };
+
+//   request.onsuccess = (event) => {
+//     console.log("Database opened successfully");
+//     const db = event.target.result;
+//   const objectStore = db.transaction([objectStoreNames], "readwrite").objectStore(objectStoreNames);
+//   const xhr = new XMLHttpRequest();
+//       xhr.open("GET", "dummy.pdf");
+//       xhr.responseType = "blob";
+//       xhr.onload = function() {
+//         if (xhr.status === 200) {
+//           // Add the PDF file to the object store
+//           const pdfFile = { id: 1, name: "Dummy PDF", date: new Date(), file: xhr.response };
+//           const addRequest = objectStore.add(pdfFile);
+
+//           addRequest.onsuccess = function() {
+//             console.log("PDF file added to IndexedDB");
+//           };
+
+//           addRequest.onerror = function() {
+//             console.log("Failed to add PDF file to IndexedDB");
+//           };
+//         } else {
+//           console.log("Failed to download PDF file from server");
+//         }
+//       };
+//       xhr.send();
+    
+//   };
+//   request.onerror = function() {
+//     console.log("Failed to open IndexedDB");
+//   };
+  
+// };
+
 const PDFJS = window.pdfjsLib;
 
 export default function App() {
@@ -97,9 +165,16 @@ export default function App() {
     setCurrentPage(currentPage - 1);
   };
   
+  
+  // useEffect(() => {
+  //   insertDataInIndexedDb();
+  // }, []);
+
   useEffect(()=>{
     showPdf()
   },[])
+
+
   return (
     <div className="App">
       <div className="container">
@@ -365,3 +440,64 @@ export default function App() {
     </div>
   );
 }
+
+
+
+// import React, { useEffect } from "react";
+
+// function App() {
+//   const dbName = "pdfs-db";
+//   const objectStoreName = "pdfs";
+
+//   useEffect(() => {
+//     // Open the database and define the object store
+//     const request = indexedDB.open(dbName, 1);
+
+//     request.onupgradeneeded = function(event) {
+//       const db = event.target.result;
+//       const objectStore = db.createObjectStore(objectStoreName, { keyPath: "id" });
+//       objectStore.createIndex("name", "name", { unique: false });
+//       objectStore.createIndex("date", "date", { unique: false });
+//     };
+
+//     request.onsuccess = function(event) {
+//       const db = event.target.result;
+//       const objectStore = db.transaction([objectStoreName], "readwrite").objectStore(objectStoreName);
+
+//       // Download the PDF file from the server
+//       const xhr = new XMLHttpRequest();
+//       xhr.open("GET", "dummy.pdf");
+//       xhr.responseType = "blob";
+//       xhr.onload = function() {
+//         if (xhr.status === 200) {
+//           // Add the PDF file to the object store
+//           const pdfFile = { id: 1, name: "Dummy PDF", date: new Date(), file: xhr.response };
+//           const addRequest = objectStore.add(pdfFile);
+
+//           addRequest.onsuccess = function() {
+//             console.log("PDF file added to IndexedDB");
+//           };
+
+//           addRequest.onerror = function() {
+//             console.log("Failed to add PDF file to IndexedDB");
+//           };
+//         } else {
+//           console.log("Failed to download PDF file from server");
+//         }
+//       };
+//       xhr.send();
+//     };
+
+//     request.onerror = function() {
+//       console.log("Failed to open IndexedDB");
+//     };
+//   }, []);
+
+//   return (
+//     <div>
+//       <h1>My App</h1>
+//     </div>
+//   );
+// }
+
+// export default App;
